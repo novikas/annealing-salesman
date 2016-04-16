@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+	<head>
+		<title>canvasExample</title>
+        <meta charset='utf-8' />
+        <script src="renderer.js"></script>
+	</head>
+	<body>
+		<canvas height='480' width='640' id='map'>Задача коммивояжора</canvas>
+    <script>
+    var solution = {
+      "path": [
+        {
+          "id": 1,
+          "x": 100,
+          "y": 100,
+          "next": 2
+        },
+        {
+          "id": 2,
+          "x": 100,
+          "y": 150,
+          "next": 3
+        },
+        {
+          "id": 3,
+          "x": 150,
+          "y": 100,
+          "next": 1
+        }
+      ]
+    };
+
+      var renderer = new Renderer(solution);
+      renderer.draw();
+    </script>
+	</body>
+</html>
