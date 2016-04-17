@@ -1,26 +1,25 @@
-function Renderer(solution) {
+function Renderer(canvasId) {
 
-  this.map = solution.path;
+  this.canvas = document.getElementById(canvasId);
 
-  this.canvas = document.getElementById('map');
+  this.map = [];
+  this.path = [];
 
   this.draw = function(){
     var context = this.canvas.getContext("2d");
+    renderer.canvas.width = renderer.canvas.width;
     context.strokeRect(0, 0, this.canvas.width, this.canvas.height);
-    //context.strokeStyle = "#eee";
+    context.moveTo(this.map[0].getX(), this.map[0].getY());
     for(var index in this.map) {
-      context.strokeRect(this.map[index].x - 2.5, this.map[index].y - 2.5, 5, 5);
-
-      var nextCity = this.findCityById(this.map[index].next);
-      if(nextCity === -1) {
-        alert(`City with id ${this.map[index].next} not found!`);
-        return;
-      }
-      context.moveTo(this.map[index].x, this.map[index].y);
-      context.lineTo(nextCity.x, nextCity.y);
+      context.strokeRect(this.map[index].getX() - 2.5, this.map[index].getY() - 2.5, 5, 5);
+      context.lineTo(this.map[index].getX(), this.map[index].getY());
     }
+    context.fillRect(this.map[0].getX() - 2.5, this.map[0].getY() - 2.5, 5, 5);
+    context.lineTo(this.map[0].getX(), this.map[0].getY());
+    //context.strokeStyle("#eee");
     context.stroke();
   };
+
 
   this.findCityById = function(id){
     for(var i in this.map){
