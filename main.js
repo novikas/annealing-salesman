@@ -6,7 +6,7 @@ window.onload = function(e){
   init();
 
   document.getElementById("start-annealing").onclick = function(){
-    annealing(10, 0.001);
+    annealing(10, 0.00001);
   };
   document.getElementById("refresh-candidate").onclick = refresh;
   label = document.getElementById('energy');
@@ -21,8 +21,7 @@ function refresh(){
 
 function init(){
   renderer = new Renderer("map");
-  var citiesAmount = Math.floor(Math.random()*98) + 1;
-
+  var citiesAmount = Math.floor(Math.random()*50) + 1;
   var map = [];
   for(var i = 0; i < citiesAmount; i++){
     map[i] = new City(i, Math.floor(Math.random()*(renderer.canvas.width + 2 )) - 1, Math.floor(Math.random()*(renderer.canvas.height + 2) - 1));
@@ -37,11 +36,12 @@ function annealing(initialTemperature, endTemperature){
   var currentSolution = solution;
   var currentEnergy = currentSolution.getEnergy();
   var temperature = initialTemperature;
-  var iteration = 0;
+  var iteration = 1;
   display({
     "Energy": currentEnergy,
     "Temperature": temperature,
-    "Iteration": iteration
+    "Iteration": iteration,
+    "Cities Amount": currentSolution.getPath().length
   });
   while(temperature > endTemperature && iteration < 1000000){
     var candidateSolution = (new Solution(currentSolution.getPath().slice())).refresh();
@@ -58,7 +58,7 @@ function annealing(initialTemperature, endTemperature){
       }
     }
     if(iteration % 1000 == 0)
-      temperature = decreaseTemperature(temperature);
+      temperature = decreaseTemperature(temperature, iteration);
     iteration++;
   }
   display({
@@ -87,8 +87,8 @@ function isTransition(probability){
   }
 }
 
-function decreaseTemperature(temperature){
-  return temperature*0.99;
+function decreaseTemperature(temperature, i = 1){
+  return temperature*0.98;
 }
 
 function display(data){

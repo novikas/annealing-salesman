@@ -21,12 +21,16 @@ Solution.prototype.getEnergy = function(){
 }
 
 Solution.prototype.refresh = function(){
-  var fromIndex = Math.floor(Math.random()*(this._path.length - 0));
-  var toIndex = Math.floor(Math.random()*(this._path.length - 0));
-  while(toIndex === fromIndex){
-    var toIndex = Math.floor(Math.random()*(this._path.length - 0));
+  var fromIndex = Math.floor(Math.random()*(this._path.length - 1));
+  while(fromIndex === 0){
+    var fromIndex = Math.floor(Math.random()*(this._path.length - 1));
   }
 
+  var toIndex = Math.floor(Math.random()*(this._path.length - 1));
+  while(toIndex === fromIndex || toIndex === 0){
+    var toIndex = Math.floor(Math.random()*(this._path.length - 1));
+  }
+  
   var buffer = this._path[fromIndex];
   this._path[fromIndex] = this._path[toIndex];
   this._path[toIndex] = buffer;
