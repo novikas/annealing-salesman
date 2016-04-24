@@ -2,6 +2,8 @@
 var renderer;
 var solution;
 var label;
+
+var thatWas = [];
 window.onload = function(e){
   init();
 
@@ -57,7 +59,7 @@ function annealing(initialTemperature, endTemperature){
         candidateEnergy = null;
       }
     }
-    if(iteration % 1000 == 0)
+    if(iteration % 100 == 0)
       temperature = decreaseTemperature(temperature, iteration);
     iteration++;
   }
@@ -88,7 +90,7 @@ function isTransition(probability){
 }
 
 function decreaseTemperature(temperature, i = 1){
-  return temperature*0.98;
+  return temperature*0.99;
 }
 
 function display(data){
